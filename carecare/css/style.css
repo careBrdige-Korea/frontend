@@ -19,12 +19,23 @@
 
 .back-to-top {
     position: fixed;
-    display: none;
-    left: 45px;
-    bottom: 45px;
+    display: flex;
+    justify-content: center;
+    left: 14px;
+    bottom: 19px;
+    width: 44px;
+    height: 44px;
     z-index: 99;
+    background: linear-gradient(rgb(204, 158, 254) 0%, rgb(220, 158, 254) 100%);
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.1) 0px 4px 6px, rgba(0, 0, 0, 0.15) 0px 8px 30px;
+    border: none;
+    border-radius: 18px;
 }
 
+.bi-arrow-up{
+    color: black;
+    font-weight: 700;
+}
 
 /*** Spinner ***/
 #spinner {
