@@ -93,7 +93,46 @@
         }
     });
 
-
-
 })(jQuery);
 
+// 2단계: 서비스워커(Service Worker) 등록
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      })
+      .catch(err => {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  });
+}
+
+// 3단계: 푸시 구독 구현
+async function subscribeUserToPush() {
+  const applicationServerKey = 'VAPID_PUBLIC_KEY_HERE'; // 서버에서 생성한 공개 키로 교체해야 합니다.
+  const registration = await navigator.serviceWorker.ready;
+  const subscription = await registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: applicationServerKey
+  });
+
+  // 생성된 구독 객체(토큰)를 백엔드 서버로 전송하여 저장해야 합니다.
+  await fetch('/api/save-subscription', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(subscription)
+  });
+}
+
+// 사용자에게 알림 권한을 요청하고 구독을 시작합니다.
+// 실제 앱에서는 사용자가 '알림 받기'와 같은 버튼을 클릭했을 때 이 함수를 호출하는 것이 좋습니다.
+if (Notification.permission === 'granted') {
+  subscribeUserToPush();
+} else if (Notification.permission !== 'denied') {
+  Notification.requestPermission().then(permission => {
+    if (permission === 'granted') {
+      subscribeUserToPush();
+    }
+  });
+}
