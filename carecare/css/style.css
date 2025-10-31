@@ -518,3 +518,13 @@
     color: var(--primary);
 }
 
+
+/* PWA Keyboard-related Fixes */
+.vh-100 {
+    height: 100dvh !important; /* vh to dvh for dynamic viewport */
+}
+
+.min-vh-100 {
+    min-height: 100dvh !important; /* vh to dvh for dynamic viewport */
+}
+
