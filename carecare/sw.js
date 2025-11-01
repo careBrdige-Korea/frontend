@@ -1,4 +1,4 @@
-const CACHE_NAME = 'carebridge-v2';
+const CACHE_NAME = 'carebridge-v7';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -22,7 +22,7 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME];
+  const cacheWhitelist = ['carebridge-v7'];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
@@ -66,3 +66,4 @@ self.addEventListener('notificationclick', event => {
   // 알림 클릭 시 특정 페이지로 이동
   event.waitUntil(clients.openWindow(event.notification.data || '/'));
 });
+
