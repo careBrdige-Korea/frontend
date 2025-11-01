@@ -1,4 +1,4 @@
-const CACHE_NAME = 'carebridge-v7';
+const CACHE_NAME = 'carebridge-v2';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -22,7 +22,7 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  const cacheWhitelist = ['carebridge-v7'];
+  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
