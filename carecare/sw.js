@@ -1,4 +1,4 @@
-const CACHE_NAME = 'carebridge-v1';
+const CACHE_NAME = 'carebridge-v7';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -18,6 +18,21 @@ self.addEventListener('install', event => {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
+  );
+});
+
+self.addEventListener('activate', event => {
+  const cacheWhitelist = ['carebridge-v7'];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });
 
